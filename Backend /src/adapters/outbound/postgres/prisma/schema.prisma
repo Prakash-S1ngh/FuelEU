@@ -1,9 +1,9 @@
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL") // set DATABASE_URL in your environment, e.g. DATABASE_URL="postgresql://user:pass@host:5432/dbname?sslmode=require"
+  url      = env("DATABASE_URL")
 }
-// generator client { provider = "prisma-client-js" }
+
 generator client {
   provider = "prisma-client-js"
 }

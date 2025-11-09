@@ -1,0 +1,54 @@
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL") // set DATABASE_URL in your environment, e.g. DATABASE_URL="postgresql://user:pass@host:5432/dbname?sslmode=require"
+}
+// generator client { provider = "prisma-client-js" }
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Route {
+  id            String  @id @default(uuid())
+  route_id      String
+  year          Int
+  ghg_intensity Float   // gCO2e/MJ (Actual)
+  is_baseline   Boolean @default(false)
+}
+
+model ShipCompliance {
+  id        String @id @default(uuid())
+  ship_id   String
+  year      Int
+  cb_gco2eq Float   // Compliance Balance snapshot (gCO2e)
+  created_at DateTime @default(now())
+}
+
+model BankEntry {
+  id        String @id @default(uuid())
+  ship_id   String
+  year      Int
+  amount_gco2eq Float   // positive only
+  created_at DateTime @default(now())
+}
+
+model Pool {
+  id         String     @id @default(uuid())
+  year       Int
+  created_at DateTime   @default(now())
+  members    PoolMember[]
+}
+
+model PoolMember {
+  id         String  @id @default(uuid())
+  pool_id    String
+  ship_id    String
+  cb_before  Float   // snapshot before pooling
+  cb_after   Float   // result after allocation
+  pool       Pool    @relation(fields: [pool_id], references: [id])
+  @@index([pool_id])
+}
+
+
+
+

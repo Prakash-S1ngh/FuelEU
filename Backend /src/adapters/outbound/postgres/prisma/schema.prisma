@@ -13,6 +13,11 @@ model Route {
   route_id      String
   year          Int
   ghg_intensity Float   // gCO2e/MJ (Actual)
+  vessel_type   String?
+  fuel_type     String?
+  fuel_consumption Float? // tonnes
+  distance      Float? // km
+  total_emissions Float? // tonnes
   is_baseline   Boolean @default(false)
 }
 

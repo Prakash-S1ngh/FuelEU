@@ -43,6 +43,7 @@ router.post("/:id/baseline", async (req: Request, res: Response) => {
  */
 router.get("/comparison", async (_: Request, res: Response) => {
   try {
+    console.log("Comparing routes...");
     const comparison = await service.compareRoutes();
     res.json({ success: true, data: comparison });
   } catch (err: any) {

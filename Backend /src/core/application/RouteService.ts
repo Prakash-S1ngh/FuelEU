@@ -6,9 +6,10 @@ import { RouteEntity } from "../domain/routes";
 export class RouteService {
   constructor(private repo: RouteRepositoryPort) {}
 
-  async getRoutes(): Promise<RouteEntity[]> {
+  async getRoutes(): Promise<any[]> {
     const routes = await this.repo.findAll();
-    return routes.map(RouteEntity.fromPrisma);
+    // Convert to RouteEntity and return plain objects suitable for JSON
+    return routes.map((r) => RouteEntity.fromPrisma(r).toPrisma());
   }
 
   async setBaseline(id: string): Promise<void> {
